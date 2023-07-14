@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const plannetsRouter = require('./routes/planets/planets.router');
@@ -6,5 +7,9 @@ app.use(cors({
     origin:'http://localhost:3000'
 }));
 app.use(express.json());
-app.use(plannetsRouter)
+app.use(express.static(path.join(__dirname,'..','public')));
+app.use(plannetsRouter);
+app.get('/*',(req, res) => {
+    res.sendFile(path.join(__dirname,'public','index.html'));
+})
 module.exports = app;  
