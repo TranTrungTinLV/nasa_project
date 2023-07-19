@@ -1,7 +1,9 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+
 const plannetsRouter = require('./routes/planets/planets.router');
+const launchesRouter = require('./routes/launches/launches.router');
 
 const app = express();
 
@@ -12,7 +14,7 @@ app.use(cors({
 }));
 
 app.use(plannetsRouter);
-
+app.use(launchesRouter);
 app.get('/*', (req, res) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
