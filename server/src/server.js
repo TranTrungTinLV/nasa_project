@@ -2,7 +2,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 8080;
-const MONGO_URL = "mongodb+srv://nasa-api:NSPROJECT@nasacluster.tntdsje.mongodb.net/nasa?retryWrites=true&w=majority";
+const MONGO_URL = "mongodb+srv://nasa-api:aAXG6TlQordeZqty@nasacluster.tntdsje.mongodb.net/nasa?retryWrites=true&w=majority";
 
 
 const app = require('./app');
@@ -16,17 +16,22 @@ mongoose.connection.once('open', () => {
     console.log('MongoDB connection ready!');
 });
 
-mongoose.connection.on('error', (error)=>{
+mongoose.connection.on('error', (error) => {
     console.error(error);
 });
 
 async function startServer() {
     await mongoose.connect(MONGO_URL, {
         useNewUrlParser: true,
-        useFindAndModify: false, //vo hieu hoa khi du lieu da kh con tren he thong
-        useCreateIndex: true,   // dieu nay giup tao moi url thay url cu
-        useUnifiedTopology: true, //dieu nay giup Mongoose communicate dc upadte vs cac DL mongo
-    });
+
+        useUnifiedTopology: true
+    },
+        err => {
+            if (err) throw err;
+            console.log('Connected to MongoDB!!!')
+        });
+
+
     await loadPlanets();
     server.listen(PORT, () => {
         console.log(
